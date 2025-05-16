@@ -57,7 +57,7 @@ ROOT_URLCONF = 'registratewithqr.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],  # Directory for custom templates
+        'DIRS': ['TEMPLATES'],  # Directory for custom templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

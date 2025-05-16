@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+
+  </head>
+  <body class="bg-gray-900 flex flex-col h-screen my-auto items-center">
+    <section class="px-4 py-8 antialiased dark:bg-gray-900 md:py-16">
+        <div class="mx-auto mt-8 grid max-w-screen-xl rounded-lg p-4 grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="">
+            <style>
+                body {
+                font-family: sans-serif;
+                text-align: center;
+                padding: 20px;
+                }
+                #reader {
+                width: 400px;
+                margin: 0 auto;
+                }
+                #result {
+                margin-top: 20px;
+                font-size: 18px;
+                color: white;
+                }
+                #error {
+                margin-top: 10px;
+                color: red;
+                }
+            </style>
+        
+
+        <div id="reader"></div>
+        <div id="result">Acerce el codigo QR a la cámara porfavor</div>
+        <div id="error"></div>
+
+        <!-- html5-qrcode CDN -->
+        <script src="https://unpkg.com/html5-qrcode"></script>
+
+        <script>
+            const resultContainer = document.getElementById("result");
+            const errorContainer = document.getElementById("error");
+
+            function onScanSuccess(decodedText, decodedResult) {
+                resultContainer.textContent = `✅ Código QR detectado: ${decodedText}`;
+                errorContainer.textContent = "";
+              
+                // Verificar si es un enlace y abrirlo
+                if (decodedText.startsWith("http://") || decodedText.startsWith("https://")) {
+                  window.open(decodedText, "_blank");
+                  
+                }
+                // Detener el escaneo si no quieres seguir leyendo más QR
+                qrScanner.clear();
+            }
+
+            function onScanFailure(error) {
+            // Se producen errores frecuentes si no hay QR, no mostrar todos
+            console.warn(`⛔ Fallo en escaneo: ${error}`);
+            }
+
+            const qrScanner = new Html5Qrcode("reader");
+
+            Html5Qrcode.getCameras().then(cameras => {
+            if (cameras && cameras.length) {
+                const cameraId = cameras[0].id;
+
+                qrScanner.start(
+                cameraId,
+                {
+                    fps: 60,
+                    qrbox: 280,
+                },
+                onScanSuccess,
+                onScanFailure
+                );
+            } else {
+                errorContainer.textContent = "🚫 No se encontraron cámaras.";
+            }
+            }).catch(err => {
+            errorContainer.textContent = "🚫 Error al acceder a la cámara: " + err;
+            });
+        </script> 
+            </div>
+            
+            <div class="me-auto place-self-center text-left">
+                <a href="/" class="mt-4 mb-4 flex items-center text-blue-500 dark:focus:ring-blue-900">
+                    <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
+                    </svg>                  
+                    Regresar
+                </a>
+                <h1 class="lg:mt-8 mb-3 text-2xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-4xl">Escané el código QR previamente generado para este evento.</h1>
+                <p class="mb-2 text-gray-500 dark:text-gray-400">Esta sección te permite escanear un código QR directamente desde la webcam de tu computadora para acceder a una funcionalidad del sistema, validar tu identidad o vincular un dispositivo.</p>
+                <ol class="ms-2 space-y-1 list-decimal list-inside text-gray-400">
+                    <li>Al abrir esta sección, el navegador te pedirá permiso para usar la cámara. Haz clic en “Permitir”.</li>
+                    <li>Acerca el código QR al centro del recuadro de la cámara. Asegúrate de que esté bien iluminado y enfocado.</li>
+                    <li>El sistema detectará automáticamente el código QR y procesará la información. No es necesario presionar ningún botón.</li>
+                </ol>
+            </div>
+        </div>
+      </section> 
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+     
+</body>
+</html>
