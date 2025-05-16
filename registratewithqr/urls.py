@@ -21,4 +21,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("website.urls")),
+    #path("generator/", include("QRgenerator.urls")),
+    #path("reader/", include("QRreader.urls")),
 ]
