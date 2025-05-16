@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'QRgenerator',  # Custom app for QR code generation
     'QRreader',  # Custom app for QR code reading
+    'website',  # Custom app for the main website
 ]
 
 MIDDLEWARE = [
